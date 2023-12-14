@@ -185,7 +185,6 @@ func main() {
 	gr.AgregarArista("emiliano", "valentina", 3)
 	gr.AgregarArista("emiliano", "malena", 4)
 	fmt.Println(Es_Conexo(gr))
-//	fmt.Println(Tiene_ciclos(gr))
 	fmt.Println(OrdenTopologico(gr))
 	l := invertir_lista(OrdenTopologico(gr))
 	fmt.Println(l)
@@ -194,7 +193,6 @@ func main() {
 
 
 func Dijkstra(g *Grafo[string], origen string, destino string) ([]string, int){
-//	var v_generico T 
 	xadres, _ := dijkstra_util(g, origen, destino)
 	if xadres == nil {
 		return nil, 0
@@ -202,9 +200,9 @@ func Dijkstra(g *Grafo[string], origen string, destino string) ([]string, int){
 	camino := []string{}
 	peso := 0
 	actual := destino
-	for actual != "" {								// (*) aca tiene error de tipo, nose si solucionarlo usando el origen o un vertice generico
+	for actual != "" {								
 		camino = append(camino, actual)
-		if xadres.Obtener(actual) != "" {			// (*)
+		if xadres.Obtener(actual) != "" {			
 			peso += g.Peso(xadres.Obtener(actual), actual)
 		}
 		actual = xadres.Obtener(actual)
@@ -214,17 +212,16 @@ func Dijkstra(g *Grafo[string], origen string, destino string) ([]string, int){
 }
 
 func dijkstra_util(g *Grafo[string], origen string, destino string) (hash.Diccionario[string, string], hash.Diccionario[string, int]) {
-//	var v_generico T
 	xadres := hash.CrearHash[string, string]()
 	distancias := hash.CrearHash[string, int]()
 
 	for _, v := range g.ObtenerVertices() {
 		distancias.Guardar(v, 9000000000000)
-		xadres.Guardar(v, "")						// (*)
+		xadres.Guardar(v, "")						
 	}
-	xadres.Guardar(origen, "")						// (*) 
+	xadres.Guardar(origen, "")						
 	distancias.Guardar(origen, 0)						
-	heap := heap.CrearHeap[string](strings.Compare)									// no se que funcion de comparacion usar aca
+	heap := heap.CrearHeap[string](strings.Compare)									
 	heap.Encolar(origen)
 
 	for !heap.EstaVacia() {
